@@ -8,10 +8,11 @@ import App from "./App";
 import "./index.css";
 import rootReducer from "./modules";
 import reportWebVitals from "./reportWebVitals";
+import ReduxThunk from "redux-thunk";
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(logger))
+  composeWithDevTools(applyMiddleware(ReduxThunk, logger))
 );
 
 ReactDOM.render(

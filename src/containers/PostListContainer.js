@@ -10,8 +10,9 @@ function PostListContainer() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (data) return;
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [data, dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error != null) return <div>Error!</div>;

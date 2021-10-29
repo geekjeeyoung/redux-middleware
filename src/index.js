@@ -11,18 +11,31 @@ import reportWebVitals from "./reportWebVitals";
 import ReduxThunk from "redux-thunk";
 import { BrowserRouter } from "react-router-dom";
 import createSagaMiddleware from "redux-saga";
+import { createBrowserHistory } from "history";
 
-const sagaMiddleware = createSagaMiddleware();
+const customHistory = createBrowserHistory();
+
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    history: customHistory,
+  },
+});
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(ReduxThunk, sagaMiddleware, logger))
+  composeWithDevTools(
+    applyMiddleware(
+      ReduxThunk.withExtraArgument({ history: customHistory }),
+      sagaMiddleware,
+      logger
+    )
+  )
 );
 
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter history={customHistory}>
     <Provider store={store}>
       <App />
     </Provider>

@@ -30,7 +30,7 @@ export default function posts(state = initialState, action) {
     case GET_POSTS:
     case GET_POSTS_SUCCESS:
     case GET_POSTS_ERROR:
-      const postsReducer = handleAsyncActions(GET_POSTS, "posts");
+      const postsReducer = handleAsyncActions(GET_POSTS, "posts", true);
       return postsReducer(state, action);
     case GET_POST:
     case GET_POST_SUCCESS:

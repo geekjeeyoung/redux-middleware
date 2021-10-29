@@ -1,7 +1,9 @@
 import * as postsApi from "../api/posts";
 import {
   createPromiseThunk,
+  createPromiseThunkById,
   handleAsyncActions,
+  handleAsyncActionsById,
   reducerUtils,
 } from "../lib/asyncUtils";
 
@@ -18,11 +20,11 @@ const GET_POST_SUCCESS = "GET_POST_SUCCESS";
 const GET_POST_ERROR = "GET_POST_ERROR";
 
 export const getPosts = createPromiseThunk(GET_POSTS, postsApi.getPosts);
-export const getPost = createPromiseThunk(GET_POST, postsApi.getPostById);
+export const getPost = createPromiseThunkById(GET_POST, postsApi.getPostById);
 
 const initialState = {
   posts: reducerUtils.initial(),
-  post: reducerUtils.initial(),
+  post: {},
 };
 
 export default function posts(state = initialState, action) {
@@ -32,11 +34,13 @@ export default function posts(state = initialState, action) {
     case GET_POSTS_ERROR:
       const postsReducer = handleAsyncActions(GET_POSTS, "posts", true);
       return postsReducer(state, action);
+
     case GET_POST:
     case GET_POST_SUCCESS:
     case GET_POST_ERROR:
-      const postReducer = handleAsyncActions(GET_POST, "post");
+      const postReducer = handleAsyncActionsById(GET_POST, "post", true);
       return postReducer(state, action);
+
     default:
       return state;
   }

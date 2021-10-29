@@ -4,14 +4,21 @@ import Post from "../components/Post";
 import { getPost } from "../modules/posts";
 
 function PostContainer({ postId }) {
-  const { loading, data, error } = useSelector((state) => state.posts.post);
+  const { loading, data, error } = useSelector(
+    (state) => state.posts.post[postId]
+  ) || {
+    loading: false,
+    data: null,
+    error: null,
+  };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPost(postId));
   }, [postId, dispatch]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading && !data) return <div>Loading...</div>;
   if (error != null) return <div>Error!</div>;
   if (!data) return null;
 
@@ -19,3 +26,9 @@ function PostContainer({ postId }) {
 }
 
 export default PostContainer;
+
+/*
+데이터를 제대로 캐싱하고 싶다면 아예 요청을 하지 않는 방식을 택하시고, 
+포스트 정보가 바뀔 수 있는 가능성이 있다면 
+새로 불러오긴 하지만 로딩중은 표시하지 않는 형태로 구현을 하시면 되겠습니다.
+*/

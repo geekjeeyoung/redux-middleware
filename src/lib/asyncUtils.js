@@ -6,6 +6,7 @@ export const createPromiseThunk = (type, promiseCreator) => {
   // 만약 여러 종류의 파라미터를 전달해야 하는 상황에서는 객체 타입의 파라미터를 받아오도록 하면 됩니다.
   // 예: writeComment({ postId: 1, text: '댓글 내용' });
   return (param) => async (dispatch) => {
+    console.log("param", param);
     // 요청 시작
     dispatch({ type, param });
     try {

@@ -9,6 +9,7 @@ import "./index.css";
 import rootReducer from "./modules";
 import reportWebVitals from "./reportWebVitals";
 import ReduxThunk from "redux-thunk";
+import { BrowserRouter } from "react-router-dom";
 
 const store = createStore(
   rootReducer,
@@ -16,9 +17,11 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
